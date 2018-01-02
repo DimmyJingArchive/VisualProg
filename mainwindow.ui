@@ -25,12 +25,18 @@
    </property>
    <widget class="QMenu" name="menuExit">
     <property name="title">
-     <string>Exit</string>
+     <string>File</string>
     </property>
-    <addaction name="actionHello"/>
-    <addaction name="actionWorld"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuBlock">
+    <property name="title">
+     <string>Block</string>
+    </property>
+    <addaction name="actionAddCodeblock"/>
    </widget>
    <addaction name="menuExit"/>
+   <addaction name="menuBlock"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -41,14 +47,14 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionHello">
+  <action name="actionExit">
    <property name="text">
-    <string>Hello</string>
+    <string>Exit</string>
    </property>
   </action>
-  <action name="actionWorld">
+  <action name="actionAddCodeblock">
    <property name="text">
-    <string>World</string>
+    <string>Add Codeblock</string>
    </property>
   </action>
  </widget>
