@@ -2,12 +2,14 @@
 #include <QFontMetrics>
 
 
+#include "mainwindow.h"
 #include "block.h"
 
 
-Block::Block(QWidget* parent)
+Block::Block(const unsigned long long id, QWidget* parent)
 :
-QWidget(parent)
+QWidget(parent),
+mID(id)
 {
 	// initialize the widget
 	this->setStyleSheet("background-color:lightgray");
@@ -45,6 +47,7 @@ Block::mousePressEvent(QMouseEvent *event)
 	{
 		this->close();
 		event->accept();
+		((MainWindow*)this->parent())->deleteBlock(mID);
 	}
 	else if (event->button() == Qt::MiddleButton)
 	{

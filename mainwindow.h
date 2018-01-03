@@ -22,8 +22,9 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 private:
-	Ui::MainWindow		*ui;
-	std::vector<Block*>	mBlock;
+	Ui::MainWindow							*ui;
+	std::map<unsigned long long, Block*>	mBlock;
+	unsigned long long						mID;
 
 public:
 	explicit MainWindow(QWidget *parent = 0);
@@ -31,6 +32,9 @@ public:
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
+
+public slots:
+	void deleteBlock(const unsigned long long id);
 
 private slots:
 	void addBlock();

@@ -11,13 +11,14 @@
 class Block : public QWidget
 {
 private:
-	QGridLayout*	mLayout;
-	QLabel*			mLabel;
-	QPoint			mDragPos;
-	QString			mTitle;
+	QGridLayout*		mLayout;
+	QLabel*				mLabel;
+	QPoint				mDragPos;
+	QString				mTitle;
+	unsigned long long	mID;
 
 public:
-	Block(QWidget *parent = 0);
+	Block(const unsigned long long id, QWidget *parent = 0);
 
 protected:
 	void mouseMoveEvent(QMouseEvent *event);

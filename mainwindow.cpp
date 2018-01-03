@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	mID = 0;
 	connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(close()));
 	connect(ui->actionAddCodeblock, SIGNAL(triggered(bool)), this, SLOT(addBlock()));
 }
@@ -39,9 +40,16 @@ MainWindow::keyPressEvent(QKeyEvent *event)
 void
 MainWindow::addBlock()
 {
-	Block *elem = new Block(this);
+	Block *elem = new Block(mID++, this);
 	elem->show();
 	elem->move(QCursor::pos() - frameGeometry().topLeft());
 	elem->move(elem->pos().x() - (elem->size().width() >> 1), (elem->pos().y() - this->style()->pixelMetric(QStyle::PM_TitleBarHeight) - (elem->size().height() >> 1)));
-	mBlock.push_back(elem);
+	mBlock[mID] = elem;
+}
+
+
+void
+MainWindow::deleteBlock(const unsigned long long id)
+{
+	mBlock.erase(id);
 }
