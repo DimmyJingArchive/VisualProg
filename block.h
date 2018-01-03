@@ -3,23 +3,21 @@
 
 
 #include <QWidget>
-#include <QtGui>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QGridLayout>
 
 
 class Block : public QWidget
 {
 private:
-	QLabel*	mLabel;
-	QPoint	mDragPos;
-	QString	mTitle;
+	QGridLayout*	mLayout;
+	QLabel*			mLabel;
+	QPoint			mDragPos;
+	QString			mTitle;
 
 public:
 	Block(QWidget *parent = 0);
-
-private slots:
-	QSize updateSize();
 
 protected:
 	void mouseMoveEvent(QMouseEvent *event);

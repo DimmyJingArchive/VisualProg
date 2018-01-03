@@ -1,5 +1,4 @@
 #include <QDebug>
-#include <QFont>
 #include <QFontMetrics>
 
 
@@ -10,10 +9,27 @@ Block::Block(QWidget* parent)
 :
 QWidget(parent)
 {
+	// initialize the widget
+	this->setStyleSheet("background-color:lightgray");
+
+	// initialize the block
+	mLayout = new QGridLayout(this);
 	mLabel = new QLabel(this);
-	mTitle = "asdfasdfasdfasdfasdfasdfasdfasdf";
+
+	// initialize the layout
+	mLayout->setMargin(8);
+
+	// set size policies
+	mLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+	mLabel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+
+	// set default title
+	mTitle = "asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf";
 	mLabel->setText(mTitle);
-	updateSize();
+
+	// add stuff to widget
+	mLayout->addWidget(mLabel, 0, 0, 3, 1);
+	this->setLayout(mLayout);
 }
 
 
@@ -34,7 +50,6 @@ Block::mousePressEvent(QMouseEvent *event)
 	{
 		mTitle = "clicked";
 		mLabel->setText(mTitle);
-		updateSize();
 	}
 }
 
@@ -47,15 +62,4 @@ Block::mouseMoveEvent(QMouseEvent *event)
 		this->move(event->globalPos() - mDragPos);
 		event->accept();
 	}
-}
-
-
-QSize
-Block::updateSize()
-{
-	QSize size(this->fontMetrics().width(mTitle), this->fontMetrics().height());
-	this->move(this->pos().x() + (this->size().width() >> 1) - (size.width() >> 1), this->pos().y() + (this->size().height() >> 1) - (size.height() >> 1));
-	mLabel->resize(size);
-	this->resize(size);
-	return size;
 }
