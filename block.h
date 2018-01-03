@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QGridLayout>
+#include <QPushButton>
 
 
 class Block : public QWidget
@@ -17,12 +18,17 @@ private:
 	QString				mTitle;
 	unsigned long long	mID;
 
+	QPushButton*		mButton1;
+	QPushButton*		mButton2;
+	QPushButton*		mButton3;
+
 public:
 	Block(const unsigned long long id, QWidget *parent = 0);
 
 protected:
-	void mouseMoveEvent(QMouseEvent *event);
-	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent* event);
+	void mousePressEvent(QMouseEvent* event);
+	void wheelEvent(QWheelEvent* event);
 };
 
 
