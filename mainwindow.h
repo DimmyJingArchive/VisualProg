@@ -24,11 +24,15 @@ class MainWindow : public QMainWindow
 private:
 	Ui::MainWindow							*ui;
 	std::map<unsigned long long, Block*>	mBlock;
+	QString									mBlockCss;
 	unsigned long long						mID;
 
 public:
 	explicit MainWindow(QWidget *parent = 0);
+
 	~MainWindow();
+
+	QString& getBlockCss();
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
@@ -40,6 +44,7 @@ private slots:
 	void addBlock();
 
 private:
+	QString setupCss(const char* fileName);
 };
 
 

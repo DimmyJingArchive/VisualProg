@@ -1,10 +1,30 @@
-QWidget
+#BlockTitle
 {
-background-color: #b2ebf2
+background-color: #202020;
+color: #FFFFFF;
 }
 
 
-QLabel
+#BlockBackground
 {
-background-color: #81b9bf
+background-color: #424242;
+}
+
+
+#BlockBorder
+{
+background-color: rgba(0, 0, 0, 0);
+}
+
+
+#BlockInput, #BlockOutput
+{
+background-color: #272727;
+color: #FFFFFF;
+}
+
+
+#BlockInput:hover, #BlockOutput:hover
+{
+background-color: #424242;
 }

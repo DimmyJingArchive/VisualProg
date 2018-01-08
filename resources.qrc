@@ -1,2 +1,6 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/Resource">
+        <file>Resource/Block.css</file>
+        <file>Resource/Main.css</file>
+    </qresource>
+</RCC>

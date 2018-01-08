@@ -1,0 +1,19 @@
+#MainWindow
+{
+background-color: #303030;
+color: #FFFFFF;
+}
+
+
+#MainWindowMenuBar
+{
+background-color: #000000;
+color: #FFFFFF;
+}
+
+
+QMenu
+{
+background-color: #212121;
+color: #FFFFFF;
+}

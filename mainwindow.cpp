@@ -10,15 +10,27 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	this->setObjectName("MainWindow");
+	ui->menuBar->setObjectName("MainWindowMenuBar");
+	delete ui->mainToolBar;
 	mID = 0;
 	connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(close()));
 	connect(ui->actionAddCodeblock, SIGNAL(triggered(bool)), this, SLOT(addBlock()));
+	mBlockCss = setupCss("Block.css");
+	this->setStyleSheet(setupCss("Main.css"));
 }
 
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+
+QString&
+MainWindow::getBlockCss()
+{
+	return mBlockCss;
 }
 
 
@@ -53,3 +65,37 @@ MainWindow::deleteBlock(const unsigned long long id)
 {
 	mBlock.erase(id);
 }
+
+
+QString
+MainWindow::setupCss(const char *fileName)
+{
+	// Read file
+	QString name(":/Resource/Resource/");
+	name += fileName;
+	QFile file(name);
+	file.open(QIODevice::ReadOnly);
+	QString rawData = file.readAll();
+	file.close();
+	return rawData;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

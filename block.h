@@ -11,24 +11,43 @@
 
 class Block : public QWidget
 {
+	Q_OBJECT
+
 private:
 	QGridLayout*		mLayout;
-	QLabel*				mLabel;
+	QLabel*				mTitle;
+	QLabel*				mBackground;
 	QPoint				mDragPos;
-	QString				mTitle;
+	QString				mTitleText;
 	unsigned long long	mID;
 
-	QPushButton*		mButton1;
-	QPushButton*		mButton2;
-	QPushButton*		mButton3;
+	QPushButton*		mAddIn;
+	QPushButton*		mAddOut;
+	QPushButton*		mPopIn;
+	QPushButton*		mPopOut;
+
+	std::vector<QLabel*>mInput;
+	std::vector<QLabel*>mOutput;
 
 public:
 	Block(const unsigned long long id, QWidget *parent = 0);
+
+	~Block();
+
+public slots:
+	void updateText(const QString& str);
 
 protected:
 	void mouseMoveEvent(QMouseEvent* event);
 	void mousePressEvent(QMouseEvent* event);
 	void wheelEvent(QWheelEvent* event);
+	void resizeEvent(QResizeEvent*);
+
+private slots:
+	void addInput();
+	void addOutput();
+	void popInput();
+	void popOutput();
 };
 
 

@@ -36,3 +36,6 @@ FORMS += \
         mainwindow.ui
 
 QMAKE_CXXFLAGS += -std=c++17
+
+RESOURCES += \
+    resources.qrc
