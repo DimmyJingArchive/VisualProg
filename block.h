@@ -14,6 +14,10 @@ class Block : public QWidget
 	Q_OBJECT
 
 private:
+	static constexpr int eTitleMinSize = 32;	// If the title is less than eTitleMinSize amount of characters, it would fill the surroundings with white spaces
+	static constexpr int eTitleFont = 10;		// The extra font size of the title compared to the other labels
+	static constexpr int eMinFont = 20;			// The minimum font before the label disappear
+
 	QGridLayout*		mLayout;
 	QLabel*				mTitle;
 	QLabel*				mBackground;
@@ -44,6 +48,7 @@ protected:
 	void resizeEvent(QResizeEvent*);
 
 private slots:
+	void adjustLabelSize();
 	void addInput();
 	void addOutput();
 	void popInput();

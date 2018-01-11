@@ -7,15 +7,22 @@
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
-	ui(new Ui::MainWindow)
+	ui(new Ui::MainWindow),
+	mID(0)
 {
 	ui->setupUi(this);
+
+	// setup menu and canvas
 	this->setObjectName("MainWindow");
 	ui->menuBar->setObjectName("MainWindowMenuBar");
+	for (auto& i : ui->menuBar->actions()) i->setObjectName("MainWindowAction");
 	delete ui->mainToolBar;
-	mID = 0;
+
+	// connect actions
 	connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(close()));
 	connect(ui->actionAddCodeblock, SIGNAL(triggered(bool)), this, SLOT(addBlock()));
+
+	// setup css
 	mBlockCss = setupCss("Block.css");
 	this->setStyleSheet(setupCss("Main.css"));
 }
@@ -39,6 +46,7 @@ MainWindow::keyPressEvent(QKeyEvent *event)
 {
 	if (event->text() == "\u0001")
 	{
+		// <c-a>
 		addBlock();
 		event->accept();
 	}

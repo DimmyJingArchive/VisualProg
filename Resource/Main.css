@@ -1,19 +1,19 @@
 #MainWindow
 {
-background-color: #303030;
-color: #FFFFFF;
+	background-color: #303030;
+	color: #FFFFFF;
 }
 
 
 #MainWindowMenuBar
 {
-background-color: #000000;
-color: #FFFFFF;
+	background-color: #000000;
+	color: #FFFFFF;
 }
 
 
-QMenu
+#MainWindowAction
 {
-background-color: #212121;
-color: #FFFFFF;
+	background-color: #212121;
+	color: #FFFFFF;
 }

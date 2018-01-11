@@ -16,30 +16,24 @@ mID(id)
 
 	// initialize the block
 	mBackground = new QLabel(this);
-	mLayout = new QGridLayout(this);
+	mBackground->setObjectName("BlockBackground");
 	mTitle = new QLabel(this);
+	mTitle->setAlignment(Qt::AlignCenter);
+	mTitle->setObjectName("BlockTitle");
 	mAddIn = new QPushButton("Add Input", this);
 	mAddOut = new QPushButton("Add Output", this);
 	mPopIn = new QPushButton("Pop Input", this);
 	mPopOut = new QPushButton("Pop Output", this);
-	mTitle->setAlignment(Qt::AlignCenter);
-	mTitle->setMargin(8);
-	mTitle->setObjectName("BlockTitle");
-	mBackground->setObjectName("BlockBackground");
 
 	// initialize the layout
+	mLayout = new QGridLayout(this);
 	mLayout->setMargin(0);
 	mLayout->setSpacing(0);
-
-	// set size
 	mLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-	mBackground->setFixedSize(this->size());
 
 	// set default title
-	updateText("asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf");
-	QFont font = mTitle->font();
-	font.setPointSize(font.pointSize() + 10);
-	mTitle->setFont(font);
+	updateText("Code Block");
+	adjustLabelSize();
 
 	// add stuff to widget
 	mLayout->addWidget(mTitle, 0, 0, 1, 3, Qt::AlignCenter);
@@ -54,6 +48,7 @@ mID(id)
 	connect(mPopIn, SIGNAL(clicked(bool)), this, SLOT(popInput()));
 	connect(mPopOut, SIGNAL(clicked(bool)), this, SLOT(popOutput()));
 
+	// show the widgets
 	mBackground->show();
 	this->setLayout(mLayout);
 }
@@ -68,7 +63,8 @@ void
 Block::updateText(const QString &str)
 {
 	mTitleText = str;
-	for (int i = mTitleText.length(); i < 64; i += 2)
+	// add white spaces before and after the text
+	for (int i = mTitleText.length(); i < eTitleMinSize; i += 2)
 	{
 		mTitleText.insert(0, ' ');
 		mTitleText.insert(mTitleText.length(), ' ');
@@ -89,13 +85,8 @@ Block::mousePressEvent(QMouseEvent* event)
 	else if (event->button() == Qt::RightButton)
 	{
 		this->close();
-		event->accept();
 		((MainWindow*)this->parent())->deleteBlock(mID);
-	}
-	else if (event->button() == Qt::MiddleButton)
-	{
-		//mTitleText = "asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf";
-		updateText("a");
+		event->accept();
 	}
 }
 
@@ -114,27 +105,14 @@ Block::mouseMoveEvent(QMouseEvent* event)
 void
 Block::wheelEvent(QWheelEvent* event)
 {
-	QFont font = mTitle->font();
+	QFont font = this->font();
 	font.setPointSize(font.pointSize() + ((event->delta() / 120) * 8));
-	mTitle->setFont(font);
-	font.setPointSize(font.pointSize() - 10);
-	if (font.pointSize() < 30)
+	if (font.pointSize() < eMinFont)
 	{
-		font.setPointSize(30);
+		font.setPointSize(eMinFont);
 	}
-	mAddIn->setFont(font);
-	mAddOut->setFont(font);
-	mPopIn->setFont(font);
-	mPopOut->setFont(font);
-	for (auto& i : mInput)
-	{
-		i->setFont(font);
-	}
-	for (auto& i : mOutput)
-	{
-		i->setFont(font);
-	}
-	this->adjustSize();
+	this->setFont(font);
+	adjustLabelSize();
 }
 
 
@@ -146,14 +124,30 @@ Block::resizeEvent(QResizeEvent*)
 
 
 void
+Block::adjustLabelSize()
+{
+	QFont font = this->font();
+	font.setPointSize(font.pointSize() + eTitleFont);
+	mTitle->setFont(font);
+	mAddIn->setFont(this->font());
+	mPopIn->setFont(this->font());
+	mAddOut->setFont(this->font());
+	mPopOut->setFont(this->font());
+	for (auto& i : mInput) i->setFont(this->font());
+	for (auto& i : mOutput) i->setFont(this->font());
+	this->adjustSize();
+}
+
+
+void
 Block::addInput()
 {
 	QLabel *label = new QLabel("Input", this);
 	label->setObjectName("BlockInput");
 	label->setAlignment(Qt::AlignCenter);
-	label->setMargin(8);
 	mInput.push_back(label);
 	mLayout->addWidget(label, mInput.size() + 2, 0);
+	adjustLabelSize();
 }
 
 
@@ -163,9 +157,9 @@ Block::addOutput()
 	QLabel *label = new QLabel("Output", this);
 	label->setObjectName("BlockOutput");
 	label->setAlignment(Qt::AlignCenter);
-	label->setMargin(8);
 	mOutput.push_back(label);
 	mLayout->addWidget(label, mOutput.size() + 2, 2);
+	adjustLabelSize();
 }
 
 
