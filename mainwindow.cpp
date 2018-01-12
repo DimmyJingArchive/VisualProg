@@ -42,7 +42,7 @@ MainWindow::getBlockCss()
 
 
 void
-MainWindow::keyPressEvent(QKeyEvent *event)
+MainWindow::keyPressEvent(QKeyEvent* event)
 {
 	if (event->text() == "\u0001")
 	{
@@ -50,9 +50,30 @@ MainWindow::keyPressEvent(QKeyEvent *event)
 		addBlock();
 		event->accept();
 	}
-	else
+	//qDebug() << event->text();
+}
+
+
+void
+MainWindow::mousePressEvent(QMouseEvent *event)
+{
+	if (event->buttons() & Qt::LeftButton)
 	{
-		qDebug() << event->text();
+		mDragPos = event->globalPos() - frameGeometry().topLeft();
+		mPrevDragPos -= mPrevDragPos;
+		event->accept();
+	}
+}
+
+
+void
+MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+	if (event->buttons() & Qt::LeftButton)
+	{
+		for (std::pair<unsigned long long, Block*>&& i : mBlock) i.second->move((event->globalPos() - mDragPos) - mPrevDragPos + i.second->pos());
+		mPrevDragPos = event->globalPos() - mDragPos;
+		event->accept();
 	}
 }
 
@@ -60,11 +81,12 @@ MainWindow::keyPressEvent(QKeyEvent *event)
 void
 MainWindow::addBlock()
 {
-	Block *elem = new Block(mID++, this);
+	Block *elem = new Block(mID, this);
 	elem->show();
 	elem->move(QCursor::pos() - frameGeometry().topLeft());
 	elem->move(elem->pos().x() - (elem->size().width() >> 1), (elem->pos().y() - this->style()->pixelMetric(QStyle::PM_TitleBarHeight) - (elem->size().height() >> 1)));
 	mBlock[mID] = elem;
+	mID++;
 }
 
 

@@ -77,12 +77,12 @@ Block::updateText(const QString &str)
 void
 Block::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->buttons() & Qt::LeftButton)
 	{
 		mDragPos = event->globalPos() - frameGeometry().topLeft();
 		event->accept();
 	}
-	else if (event->button() == Qt::RightButton)
+	else if (event->buttons() & Qt::RightButton)
 	{
 		this->close();
 		((MainWindow*)this->parent())->deleteBlock(mID);

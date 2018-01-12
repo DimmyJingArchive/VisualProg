@@ -26,16 +26,20 @@ private:
 	std::map<unsigned long long, Block*>	mBlock;
 	QString									mBlockCss;
 	unsigned long long						mID;
+	QPoint									mPrevDragPos;
+	QPoint									mDragPos;
 
 public:
-	explicit MainWindow(QWidget *parent = 0);
+	explicit MainWindow(QWidget* parent = 0);
 
 	~MainWindow();
 
 	QString& getBlockCss();
 
 protected:
-	void keyPressEvent(QKeyEvent *event);
+	void keyPressEvent(QKeyEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
 
 public slots:
 	void deleteBlock(const unsigned long long id);
